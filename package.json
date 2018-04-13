@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@cljs-oss/module-deps": "^1.1.1",
+    "emotion": "^9.1.1",
+    "webpack": "^4.5.0"
+  }
+}
