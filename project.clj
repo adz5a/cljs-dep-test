@@ -55,11 +55,15 @@
                 :source-paths ["src"]
                 :compiler {:output-to "resources/public/js/compiled/cljs_dep_test.js"
                            :main cljs-dep-test.core
-                           :optimizations :advanced
-                           :externs ["src/js/common-externs.js"]
+                           :optimizations :simple
+                           :externs ["src/js/common-externs.js"
+                                     "src/js/message-externs.js"]
                            :foreign-libs [{:file "resources/compiled/js/common.js"
                                            :module-type :commonjs
-                                           :provides ["cljsjs.common"]}]
+                                           :provides ["cljsjs.common"]}
+                                          {:file "resources/compiled/js/message.js"
+                                           :module-type :commonjs
+                                           :provides ["cljsjs.message"]}]
                            :pretty-print false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"

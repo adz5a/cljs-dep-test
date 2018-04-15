@@ -1,6 +1,6 @@
 (ns cljs-dep-test.core
   (:require [reagent.core :as reagent :refer [atom]]
-            [cljsjs.common :as com :refer [greet css]]
+            [cljsjs.common :as com :refer [greet css CodeMirror]]
             [cljsjs.message :refer [yolo]]))
 
 (enable-console-print!)
@@ -13,14 +13,26 @@
 
 (def red-class (css (clj->js {:color "red"})))
 
+(println CodeMirror)
+
+(defn codemirror []
+  (let [!ref (atom nil)
+        get-ref (partial reset! !ref)]
+    (reagent/create-class {:component-did-mount (fn [this]
+                                                  (CodeMirror @!ref (clj->js {:value (str '(println "hello world"))
+                                                                                  :mode "clojure"})))
+                           :reagent-render (fn []
+                                             [:span {:ref get-ref}])})))
 
 (defn hello-world []
   [:div
    [:h1 (:text @app-state)]
-   [:h3 {:className red-class} (yolo)]])
+   [:h3 {:className red-class} (yolo)]
+   [codemirror]])
 
 (reagent/render-component [hello-world]
                           (. js/document (getElementById "app")))
+
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on
